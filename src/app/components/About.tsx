@@ -13,13 +13,13 @@ const cards = [
   },
   {
     icon: User,
-    title: "The Creator",
-    text: "Husnain Mahmood aka HASH",
+    title: "The Creators",
+    text: "Husnain Mahmood \n Hassaan Ahmed Khan",
   },
   {
     icon: Mail,
     title: "Reach Out",
-    text: "husnaindznfx@gmail.com",
+    text: "husnaindznfx@gmail.com \n myselfhassaankhan@gmail.com",
   },
 ];
 
