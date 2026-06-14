@@ -9,17 +9,17 @@ const cards = [
   {
     icon: Briefcase,
     title: "Origin",
-    text: "Created by GFX Designer for GFX Designers",
+    text: "Created by GFX Designers for GFX Designers",
   },
   {
     icon: User,
-    title: "The Creator",
-    text: "Husnain Mahmood",
+    title: "The Creators",
+    text: "Husnain Mahmood\nHassaan Ahmed Khan",
   },
   {
     icon: Mail,
     title: "Reach Out",
-    text: "husnaindznfx@gmail.com",
+    text: "husnaindznfx@gmail.com\nmyselfhassaankhan@gmail.com",
   },
 ];
 
