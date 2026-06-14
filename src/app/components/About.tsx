@@ -14,12 +14,12 @@ const cards = [
   {
     icon: User,
     title: "The Creators",
-    text: "Husnain Mahmood\nHassaan Ahmed Khan",
+    text: <>Husnain Mahmood<br />Hassaan Ahmed Khan</>,
   },
   {
     icon: Mail,
     title: "Reach Out",
-    text: "husnaindznfx@gmail.com\nmyselfhassaankhan@gmail.com",
+    text: <>husnaindznfx@gmail.com<br />myselfhassaankhan@gmail.com</>,
   },
 ];
 
