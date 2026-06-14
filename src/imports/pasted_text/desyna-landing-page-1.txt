@@ -1,0 +1,232 @@
+Note for AI developer: Convert all underscores in CSS variables, class names, and URLs back to standard hyphens before generating the code.Ensure all background videos are seamless loops without any stutter or flash on replay.Implement a global dark / light mode state that alters the CSS variables.Crucially, when in light mode, the __foreground variable MUST become a dark color(e.g., black or very dark gray) and the __background MUST become a light cream gradient so that all text is clearly visible.
+
+Build a premium, single page landing page for Desyna an AI powered web based design suite using React + Vite + Tailwind CSS + shadcn / ui + Framer Motion(motion / react).The page has a luxury editorial aesthetic.Instead of purely flat black and white, it uses rich gradients(a dark black to dark grey gradient in dark mode, smoothly transitioning to a white to cream gradient in light mode).The design must incorporate vibrant, blurred liquid aurora / mesh gradient glows(neon greens, purples, and blues) behind main content areas to add creative color, hinting at the vibrant tools unlocked upon login.
+
+  FONTS
+Import from Google Fonts:
+https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap
+* Headings: Instrument Serif(italic) used via Tailwind class font_heading
+* Body: Barlow(weights 300, 400, 500, 600) used via Tailwind class font_body
+Tailwind config extends fontFamily:
+
+heading: ["'Instrument Serif'", "serif"]
+body: ["'Barlow'", "sans_serif"]
+
+COLOR THEME(CSS custom properties, HSL format)
+
+:root {
+  __background: 213 45 % 67 %;
+  __foreground: 0 0 % 100 %;
+  __card: 213 45 % 62 %;
+  __card_foreground: 0 0 % 100 %;
+  __primary: 0 0 % 100 %;
+  __primary_foreground: 213 45 % 67 %;
+  __secondary: 213 45 % 72 %;
+  __secondary_foreground: 0 0 % 100 %;
+  __muted: 213 35 % 60 %;
+  __muted_foreground: 0 0 % 100 % / 0.7;
+  __accent: 213 45 % 72 %;
+  __accent_foreground: 0 0 % 100 %;
+  __destructive: 0 84.2 % 60.2 %;
+  __border: 0 0 % 100 % / 0.2;
+  __input: 0 0 % 100 % / 0.2;
+  __ring: 0 0 % 100 % / 0.3;
+  __radius: 9999px;
+  __glass_bg: rgba(255, 255, 255, 0.12);
+  __glass_border: rgba(255, 255, 255, 0.25);
+  __glass_shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  __glass_blur: 16px;
+}
+
+Add a.light class to the global CSS that correctly inverts these variables to make the background a soft white / cream gradient and the foreground(text) dark gray or black.
+
+LIQUID GLASS CSS(the core visual effect)
+Two utility classes defined in index.css under @layer components:
+.liquid_glass(subtle):
+
+.liquid_glass {
+  background: rgba(255, 255, 255, 0.01);
+  background_blend_mode: luminosity;
+  backdrop_filter: blur(4px);
+  _webkit_backdrop_filter: blur(4px);
+  border: none;
+  box_shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.liquid_glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border_radius: inherit;
+  padding: 1.4px;
+  background: linear_gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0 %,
+    rgba(255, 255, 255, 0.15) 20 %,
+    rgba(255, 255, 255, 0) 40 %,
+    rgba(255, 255, 255, 0) 60 %,
+    rgba(255, 255, 255, 0.15) 80 %,
+    rgba(255, 255, 255, 0.45) 100 %
+  );
+  _webkit_mask: linear_gradient(#fff 0 0) content_box, linear_gradient(#fff 0 0);
+  _webkit_mask_composite: xor;
+  mask_composite: exclude;
+  pointer_events: none;
+}
+.liquid_glass_strong(more prominent, used on CTA buttons):
+
+.liquid_glass_strong {
+  background: rgba(255, 255, 255, 0.01);
+  background_blend_mode: luminosity;
+  backdrop_filter: blur(50px);
+  _webkit_backdrop_filter: blur(50px);
+  border: none;
+  box_shadow: 4px 4px 4px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+.liquid_glass_strong::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border_radius: inherit;
+  padding: 1.4px;
+  background: linear_gradient(
+    180deg,
+    rgba(255, 255, 255, 0.5) 0 %,
+    rgba(255, 255, 255, 0.2) 20 %,
+    rgba(255, 255, 255, 0) 40 %,
+    rgba(255, 255, 255, 0) 60 %,
+    rgba(255, 255, 255, 0.2) 80 %,
+    rgba(255, 255, 255, 0.5) 100 %
+  );
+  _webkit_mask: linear_gradient(#fff 0 0) content_box, linear_gradient(#fff 0 0);
+  _webkit_mask_composite: xor;
+  mask_composite: exclude;
+  pointer_events: none;
+}
+
+ASSETS & MEDIA URLS
+StartSection video(HLS via Mux):
+https://stream.mux.com/9JXDljEVWYwWu01PUkAemafDugK89o01BR6zqJ3aS9u00A.m3u8
+Stats section video(HLS via Mux, displayed desaturated):
+https://stream.mux.com/NcU3HlHeF7CUL86azTTzpy3Tlb00d6iF3BmCdFslMJYM.m3u8
+CTA / Footer section video(HLS via Mux):
+https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8
+Logo icon: src / assets / logo_icon.png(12x12 Tailwind = h_12 w_12)
+
+SECTION BY SECTION BREAKDOWN
+1. NAVBAR(fixed, floating)
+  * Fixed position: fixed top_4 left_0 right_0 z_50, horizontal padding px_8 lg: px_16, vertical py_3
+    * Left: 
+    * "Desyna" complete text logo alongside the Logo image(h_12 w_12).When the user clicks the logo or text, it MUST smoothly scroll to the very top(first page).
+    * Right below the logo: A stunning 3D glassmorphism Theme Toggle Button.It must be a pill shaped liquid_glass_strong container holding BOTH a Sun icon(left) and a Moon icon(right).The icon for the currently active mode must be highlighted with a subtle glowing circular background behind it.Clicking the pill toggles the theme seamlessly.
+* Center(desktop only, hidden md: flex): Navigation links inside a liquid_glass rounded_full px_1.5 py_1 pill container
+  * Links: "Features"(scrolls to Slide 3 Features Chess), "Services"(scrolls to Slide 4 Features Grid), "About"(scrolls to About section)
+    * Each link: px_3 py_2 text_sm font_medium text_foreground / 90 font_body
+      * Right items: Two buttons
+        * "Login" using liquid_glass_strong rounded_full px_4 py_1.5 text_sm(Clicking this opens the Login Modal)
+          * "Sign Up" using bg_white text_black rounded_full px_4 py_1.5 text_sm(Clicking this opens the Sign Up Modal)
+
+2. HERO SECTION
+  * Container: relative overflow_visible, fixed height 1000px, styled with a subtle gradient(e.g., bg_gradient_to_b from_background to_gray_900 in dark mode, transitioning appropriately in light mode).
+* Background Video:
+Fullscreen < video > element. 
+CRITICAL FIX FOR PREVIEW: The developer MUST use a React useRef and useEffect hook to explicitly call videoRef.current.play() on component mount to bypass autoPlay restrictions. 
+The video tag MUST have these exact attributes: muted = { true} autoPlay = { true} playsInline = { true} loop = { true}.
+Source URL: https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28_fed7_44c8_b9a9_bd9acdd5ec31.mp4
+Positioned absolute inset_0 w_full h_full object_cover z_0.Ensure this plays flawlessly on load.
+* Vibrant Aurora Glow: Add large, heavily blurred absolute positioning divs(e.g., blur_3xl, opacity_40) behind the text content but above the video.Use vibrant colors like neon green and electric blue / purple to break up the black and white aesthetic and provide a colorful, creative backdrop for the main text.
+* Dark / Light overlay: absolute inset_0 bg_background / 40 backdrop_blur_sm z_0 to blend the video with the gradients and auroras.
+* Bottom gradient fade: absolute bottom_0, height 300px, linear_gradient(to bottom, transparent, var(--background))
+* Content(z_10, centered, paddingTop: 150px):
+    * Badge pill: liquid_glass rounded_full px_1 py_1 with inner white "Welcome" badge(bg_white text_black rounded_full px_3 py_1 text_xs font_semibold) and text "Welcome"
+  * Heading(BlurText component): "What's cooking in your brain today?", text_6xl md:text_7xl lg: text_[5.5rem] font_heading italic text_foreground leading_[0.8] max_w_2xl tracking_[_4px], animated word by word from bottom with blur, delay 100ms
+    * Subtext: "Stunning designs. Infinite canvas. Built with AI tools. This is creativity wildly reimagined."
+      * CTA buttons: "Start Designing" using liquid_glass_strong and "Watch Demo" text only button.
+
+3. START SECTION("Workflow")
+  * Full width section with seamless looping HLS video background
+    * Video: autoPlay, loop, muted, playsInline, absolute inset_0 w_full h_full object_cover
+      * Top and bottom gradient fades(200px each) blending into the global background variable.
+* Content centered(z_10, minHeight 500px):
+    * Badge: "Workflow" in liquid_glass rounded_full px_3.5 py_1
+  * Heading: "Turn ideas into visuals."
+    * Subtext: "Jump onto an infinite canvas. Generate brand kits. Build portfolios. All in one unified space."
+      * CTA: "Explore Features" liquid_glass_strong
+
+4. FEATURES CHESS(This is Slide 3 for Features link)
+* Alternating layout rows designed to look the absolute best.Use subtle color tints in the background blobs here to maintain the premium feel.
+* Row 1(flex, content left / image right): 
+    * Left Text Area: Title "The Ultimate Whiteboard" and Body "Experience an immersive canvas with highly vibrant creative tools, sticky notes, and dynamic layouts."
+  * Right Visual Area: A large, beautifully styled placeholder space(using liquid_glass rounded_2xl) explicitly meant to deploy a picture or video of the interface.
+* Row 2(flex_row_reverse, content right / image left): 
+    * Left Visual Area: A large, beautifully styled placeholder space(using liquid_glass rounded_2xl) explicitly meant to deploy a picture or video of the Brandkit and Typography interface.
+    * Right Text Area: Title "Brandkit and Typography" and Body "Generate color palettes based on psychology and test fonts with intelligent pairing suggestions."
+
+5. FEATURES GRID(This is Slide 4 for Services link)
+* Section header: "Why Us" badge + "The difference is everything." heading(Must exactly match the luxury editorial visual style requested).
+* 4 column grid, each card is liquid_glass rounded_2xl p_6 with glowing minimalist icons:
+1. Icon: Zap, "Infinite Canvas", "Workspace without boundaries."
+2. Icon: Palette, "Color Psychology", "AI driven mood palettes."
+3. Icon: BarChart3, "Type Scale Generator", "Perfect visual hierarchy."
+4. Icon: Shield, "Portfolio Optimizer", "Auto masonry grid layouts."
+
+6. TESTIMONIALS
+  * Section header: "Built for designers."
+    * 3 column grid of liquid_glass cards containing reviews from professional visual identity specialists praising the typography tester and portfolio generator.
+
+7. ABOUT SECTION(Target for the About navbar link)
+* Section header: "About" badge + "The Visionary Behind the Canvas." heading
+  * Layout: Showcases frosted glass windows
+    * 3 column grid(md: grid_cols_3 gap_6), each window is a heavily frosted liquid_glass rounded_2xl p_8 card:
+1. Card 1 Text: "Created by GFX Designer for GFX Designers"
+2. Card 2 Text: "Husnain Mahmood aka HASH"
+3. Card 3 Text: "husnaindznfx@gmail.com"
+  * Text styling: text_foreground font_body font_medium text_lg text_center
+
+8. AUTHENTICATION MODALS(Login and Sign Up Overlays)
+  * State Management: Create boolean states for isLoginOpen and isSignUpOpen.
+* Modal Container: When either is true, render a full screen overlay: fixed inset_0 z_[100] flex items_center justify_center bg_black / 80 backdrop_blur_md
+  * LOGIN INTERFACE:
+    * Rendered when isLoginOpen is true.
+    * Container Style: Same as About section windows(heavily frosted liquid_glass rounded_2xl p_8 card w_full max_w_md).
+    * Heading: "Welcome Back" in font_heading italic text_4xl text_center mb_6 text_white.
+    * Fields: Two input fields(Email and Password).Inputs should have bg_white / 10 border border_white / 20 rounded_lg px_4 py_2 text_white mb_4 w_full.
+    * Primary Button: "Sign In" styled as liquid_glass_strong rounded_full w_full py_3 mt_4 text_white.
+    * Secondary Action: A text button below saying "Don't have an account? Create account"(text_white / 70).When clicked, close Login modal and open Sign Up modal.
+* SIGN UP INTERFACE:
+    * Rendered when isSignUpOpen is true.
+    * Container Style: Same heavily frosted liquid_glass rounded_2xl p_8 card w_full max_w_md.
+    * Heading: "Join the Canvas" in font_heading italic text_4xl text_center mb_6 text_white.
+    * Fields: Four input fields(Full Name, Email, Password, Confirm Password) styled identically to login inputs.
+    * Validation Logic: Implement strict state logic.If Password and Confirm Password do not match, display red error text(text_red_500 text_sm mt_2) saying "Passwords must match to create account" and prevent submission.
+    * Primary Button: "Create Account" styled as liquid_glass_strong rounded_full w_full py_3 mt_4 text_white.
+    * Secondary Action: A text button below saying "Already have an account? Login"(text_white / 70).When clicked, close Sign Up modal and open Login modal.
+
+9. CTA + FOOTER
+  * Seamless looping HLS video background
+    * Heading: "Your next masterpiece starts here."
+      * Subtext: "Join the premium design suite today. No commitment, just pure creativity."
+        * Buttons: "Sign Up Free" in strong liquid_glass, "View Plans" in solid white.
+* Footer bar: Copyright and legal links.
+
+OVERALL PAGE STRUCTURE
+
+  < div className = "theme_transition min_h_screen bg_gradient_to_b from_background to_background text_foreground" >
+    <div z_10>
+      <Navbar />
+      <AuthModals />
+      <Hero />
+      <div className="theme_transition">
+        <StartSection />
+        <FeaturesChess />
+        <FeaturesGrid />
+        <Testimonials />
+        <About />
+        <CtaFooter />
+      </div>
+    </div>
+</div >

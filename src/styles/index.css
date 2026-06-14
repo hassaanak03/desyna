@@ -1,0 +1,117 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+@theme {
+  --font-heading: 'Instrument Serif', serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+/* ─── Desyna Design System Variables ─────────────────────────────────── */
+.desyna-dark {
+  --ds-bg: #000000;
+  --ds-surface: #0a0a0a;
+  --ds-fg: #ffffff;
+  --ds-fg-muted: rgba(255, 255, 255, 0.55);
+  --ds-glass-bg: rgba(255, 255, 255, 0.06);
+  --ds-glass-border: rgba(255, 255, 255, 0.14);
+  --ds-glass-strong-bg: rgba(255, 255, 255, 0.09);
+  --ds-glass-strong-border: rgba(255, 255, 255, 0.22);
+  --ds-input-bg: rgba(255, 255, 255, 0.08);
+  --ds-input-border: rgba(255, 255, 255, 0.18);
+  --ds-overlay: rgba(0, 0, 0, 0.82);
+}
+
+.desyna-light {
+  --ds-bg: #f2f2f5;
+  --ds-surface: #ffffff;
+  --ds-fg: #0d0d0d;
+  --ds-fg-muted: rgba(0, 0, 0, 0.52);
+  --ds-glass-bg: rgba(255, 255, 255, 0.65);
+  --ds-glass-border: rgba(0, 0, 0, 0.10);
+  --ds-glass-strong-bg: rgba(255, 255, 255, 0.75);
+  --ds-glass-strong-border: rgba(0, 0, 0, 0.14);
+  --ds-input-bg: rgba(0, 0, 0, 0.05);
+  --ds-input-border: rgba(0, 0, 0, 0.15);
+  --ds-overlay: rgba(200, 200, 220, 0.82);
+}
+
+/* ─── Liquid Glass Utilities ─────────────────────────────────────────── */
+@layer components {
+  .liquid-glass {
+    background: var(--ds-glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--ds-glass-border);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.10);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.40) 0%,
+      rgba(255, 255, 255, 0.12) 20%,
+      rgba(255, 255, 255, 0.00) 40%,
+      rgba(255, 255, 255, 0.00) 60%,
+      rgba(255, 255, 255, 0.12) 80%,
+      rgba(255, 255, 255, 0.40) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .liquid-glass-strong {
+    background: var(--ds-glass-strong-bg);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: 1px solid var(--ds-glass-strong-border);
+    box-shadow:
+      4px 4px 8px rgba(0, 0, 0, 0.08),
+      inset 0 1px 1px rgba(255, 255, 255, 0.18);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-glass-strong::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.50) 0%,
+      rgba(255, 255, 255, 0.18) 20%,
+      rgba(255, 255, 255, 0.00) 40%,
+      rgba(255, 255, 255, 0.00) 60%,
+      rgba(255, 255, 255, 0.18) 80%,
+      rgba(255, 255, 255, 0.50) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .ds-theme-transition {
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+}
+
+/* ─── Glow Icon Effect ────────────────────────────────────────────────── */
+.glow-icon {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+.desyna-light .glow-icon {
+  filter: drop-shadow(0 0 8px rgba(0, 80, 180, 0.4));
+}
