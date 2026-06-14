@@ -14,7 +14,8 @@ const cards = [
   {
     icon: User,
     title: "The Creators",
-    text: "Husnain Mahmood \n Hassaan Ahmed Khan",
+    text: """Husnain Mahmood
+      Hassaan Ahmed Khan""",
   },
   {
     icon: Mail,
